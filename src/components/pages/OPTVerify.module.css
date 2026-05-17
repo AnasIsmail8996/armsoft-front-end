@@ -1,0 +1,110 @@
+/* Page Wrapper (Center everything) */
+.wrapper {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f4f7ff;
+  padding: 10px;
+}
+
+/* Form Card */
+.form {
+  background: #ffffff;
+  width: 350px;
+  padding: 25px 30px;
+  border-radius: 10px;
+  box-shadow: rgba(0,0,0,0.12) 0px 4px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  animation: pop 0.3s ease-in-out;
+}
+
+.form h2 {
+  text-align: center;
+  color: #222;
+}
+
+.desc {
+  color: #555;
+  font-size: 14px;
+  text-align: center;
+  margin-top: -8px;
+}
+
+/* Input Fields */
+.form input {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #d0d0d0;
+  outline: none;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.form input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0,123,255,0.4);
+}
+
+/* Submit Button */
+.form button {
+  padding: 12px;
+  border-radius: 6px;
+  border: none;
+  background: #007bff;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  font-weight: bold;
+}
+
+.form button:hover {
+  background: #0056b3;
+}
+
+/* SUCCESS CARD */
+.successCard {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 10px;
+  text-align: center;
+  width: 350px;
+  box-shadow: rgba(0,0,0,0.15) 0 4px 12px;
+  animation: pop 0.3s ease-in-out;
+}
+
+.successCard h2 {
+  color: #28a745;
+  margin-bottom: 10px;
+}
+
+.successCard p {
+  color: #444;
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+.successCard button {
+  background: #007bff;
+  padding: 10px 16px;
+  border-radius: 6px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: bold;
+}
+
+.successCard button:hover {
+  background: #0056b3;
+}
+
+/* Animation */
+@keyframes pop {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
