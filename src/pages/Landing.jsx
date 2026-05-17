@@ -113,9 +113,92 @@ const Landing = () => {
     return (
         <div className={styles.container}>
             {/* Hero Section (unchanged) */}
-            <section className={styles.hero}>
-                {/* ... your hero code ... */}
-            </section>
+           <section className={styles.hero}>
+    <div className={styles.heroContent}>
+        <span className={styles.eyebrow}>
+            Connect • Share • Grow
+        </span>
+
+        <h1 className={styles.title}>
+            Build your <span className={styles.titleAccent}>social world</span> with meaningful connections.
+        </h1>
+
+        <p className={styles.subtitle}>
+            Share moments, connect with creators, explore trending content,
+            and grow your community with a modern social platform built for everyone.
+        </p>
+
+        <div className={styles.ctaButtons}>
+            <button className={`${styles.btn} ${styles.btnPrimary}`}>
+                Get Started
+            </button>
+
+            <button className={`${styles.btn} ${styles.btnSecondary}`}>
+                Explore Feed
+            </button>
+        </div>
+    </div>
+
+    <div className={styles.heroImage}>
+        <div className={styles.heroCard}>
+
+            <div className={styles.heroCardItem}>
+                <div
+                    className={styles.heroCardAvatar}
+                    style={{ background: '#6c63ff' }}
+                >
+                    A
+                </div>
+
+                <div className={styles.heroCardText}>
+                    <strong>Alex Johnson</strong>
+                    <span>Posted a new design</span>
+                </div>
+
+                <div className={styles.heroCardBadge}>
+                    Trending
+                </div>
+            </div>
+
+            <div className={styles.heroCardItem}>
+                <div
+                    className={styles.heroCardAvatar}
+                    style={{ background: '#ff6b9d' }}
+                >
+                    S
+                </div>
+
+                <div className={styles.heroCardText}>
+                    <strong>Sophia Lee</strong>
+                    <span>Shared a new story</span>
+                </div>
+
+                <div className={styles.heroCardBadge}>
+                    Live
+                </div>
+            </div>
+
+            <div className={styles.heroCardItem}>
+                <div
+                    className={styles.heroCardAvatar}
+                    style={{ background: '#38d9a9' }}
+                >
+                    M
+                </div>
+
+                <div className={styles.heroCardText}>
+                    <strong>Michael Ray</strong>
+                    <span>Started following you</span>
+                </div>
+
+                <div className={styles.heroCardBadge}>
+                    New
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
 
             {/* Feed Section */}
             <section className={styles.features}>
