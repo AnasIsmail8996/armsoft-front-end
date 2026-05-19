@@ -14,7 +14,7 @@ import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 
-import { logoutUser } from '../redux/slices/authSlice';
+import { logout, logoutUser } from '../redux/slices/authSlice';
 import { toggleTheme } from '../redux/slices/themeSlice';
 
 const Navbar = () => {
@@ -25,34 +25,36 @@ const Navbar = () => {
     const { isAuthenticated, user } = useSelector((state) => state.auth);
     const { mode } = useSelector((state) => state.theme);
 
-    const initials = useMemo(() => 
+    const initials = useMemo(() =>
         user?.name?.slice(0, 1)?.toUpperCase() || 'U', [user?.name]
     );
 
     const handleLogout = async () => {
+        dispatch(logout());
+
         try {
             await dispatch(logoutUser()).unwrap();
             toast.success('Logged out successfully');
-            navigate('/login');
-        } catch (err) {
-            dispatch(logoutUser());
-            navigate('/login');
+        } catch {
+            // Client session is already cleared; backend logout is best-effort.
         }
+
+        navigate('/login');
     };
 
     const navItems = [
         { label: 'Home', icon: <HomeOutlinedIcon />, path: '/' },
-        { 
-            label: 'Create', 
-            icon: <AddCircleOutlineOutlinedIcon />, 
+        {
+            label: 'Create',
+            icon: <AddCircleOutlineOutlinedIcon />,
             path: '/home',
-            show: isAuthenticated 
+            show: isAuthenticated
         },
-        { 
-            label: 'Profile', 
-            icon: <PersonOutlineOutlinedIcon />, 
+        {
+            label: 'Profile',
+            icon: <PersonOutlineOutlinedIcon />,
             path: `/profile/${user?._id || 'me'}`,
-            show: isAuthenticated 
+            show: isAuthenticated
         },
     ];
 
@@ -66,7 +68,7 @@ const Navbar = () => {
 
                 {/* Desktop Menu */}
                 <div className={styles.navMenu}>
-                    {navItems.map((item) => 
+                    {navItems.map((item) =>
                         item.show !== false && (
                             <button
                                 key={item.label}
@@ -80,7 +82,6 @@ const Navbar = () => {
                     )}
                 </div>
 
-                {/* Right Side */}
                 <div className={styles.authSection}>
                     {/* Theme Toggle */}
                     <button
@@ -95,7 +96,7 @@ const Navbar = () => {
                             <button className={styles.logoutBtn} onClick={handleLogout}>
                                 Logout
                             </button>
-                            <div 
+                            <div
                                 className={styles.avatar}
                                 onClick={() => navigate(`/profile/${user?._id || 'me'}`)}
                             >
@@ -103,6 +104,7 @@ const Navbar = () => {
                             </div>
                         </>
                     ) : (
+                        <>
                         <button
                             className={styles.navLink}
                             style={{ background: 'var(--accent-primary)', color: 'white' }}
@@ -111,10 +113,18 @@ const Navbar = () => {
                             <LoginOutlinedIcon style={{ fontSize: 20 }} />
                             Login
                         </button>
+                        <button
+                            className={styles.navLink}
+                            style={{ background: 'var(--accent-primary)', color: 'white' }}
+                            onClick={() => navigate('/signup')}
+                            >
+                            <LoginOutlinedIcon style={{ fontSize: 20 }} />
+                            Sign Up
+                        </button>
+                            </>
                     )}
 
-                    {/* Mobile Menu Button */}
-                    <button 
+                    <button
                         className={styles.mobileMenuBtn}
                         onClick={() => setMobileOpen(!mobileOpen)}
                     >
@@ -123,7 +133,6 @@ const Navbar = () => {
                 </div>
             </div>
 
-            {/* Mobile Menu (Simple Dropdown) */}
             {mobileOpen && (
                 <div style={{
                     background: 'var(--surface-base)',
@@ -133,7 +142,7 @@ const Navbar = () => {
                     flexDirection: 'column',
                     gap: '8px'
                 }}>
-                    {navItems.map((item) => 
+                    {navItems.map((item) =>
                         item.show !== false && (
                             <button
                                 key={item.label}

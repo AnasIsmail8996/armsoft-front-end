@@ -67,7 +67,7 @@ const Login = () => {
         </button>
         <button
           type="button"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/signup")}
           disabled={loading}
         >
           Sign Up

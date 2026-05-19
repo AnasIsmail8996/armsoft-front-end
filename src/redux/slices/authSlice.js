@@ -1,15 +1,39 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { authAPI } from '../../services/api';
 
+const AUTH_PERSIST_KEY = 'persist:auth';
+const AUTH_LOGOUT_FLAG = 'auth:logoutPending';
+
+const clearAuthLogoutFlag = () => {
+    try {
+        localStorage.removeItem(AUTH_LOGOUT_FLAG);
+    } catch {
+        // Ignore storage errors.
+    }
+};
+
+const markAuthLogout = () => {
+    try {
+        localStorage.setItem(AUTH_LOGOUT_FLAG, 'true');
+    } catch {
+        // Ignore storage errors.
+    }
+};
+
 const clearSessionStorage = () => {
     try {
-        const savedTheme = localStorage.getItem('theme');
-        localStorage.clear();
-        if (savedTheme) {
-            localStorage.setItem('theme', savedTheme);
-        }
-    } catch (error) {
+        localStorage.removeItem(AUTH_PERSIST_KEY);
+        markAuthLogout();
+    } catch {
         // Ignore storage errors.
+    }
+};
+
+export const shouldSkipAuthBootstrap = () => {
+    try {
+        return localStorage.getItem(AUTH_LOGOUT_FLAG) === 'true';
+    } catch {
+        return false;
     }
 };
 
@@ -151,6 +175,10 @@ const authSlice = createSlice({
             state.success = false;
             state.message = '';
         },
+        finishAuthBootstrap: (state) => {
+            state.authLoading = false;
+            state.authChecked = true;
+        },
         logout: (state) => {
             state.user = null;
             state.token = null;
@@ -192,6 +220,7 @@ const authSlice = createSlice({
                 state.isAuthenticated = true;
                 state.message = action.payload.message;
                 state.authChecked = true;
+                clearAuthLogoutFlag();
             })
             .addCase(loginUser.rejected, (state, action) => {
                 state.loading = false;
@@ -275,6 +304,7 @@ const authSlice = createSlice({
                 state.authChecked = true;
                 state.success = true;
                 state.message = 'Logged out successfully';
+                state.authLoading = false;
                 clearSessionStorage();
             })
             .addCase(logoutUser.rejected, (state, action) => {
@@ -284,6 +314,7 @@ const authSlice = createSlice({
                 state.token = null;
                 state.isAuthenticated = false;
                 state.authChecked = true;
+                state.authLoading = false;
                 clearSessionStorage();
             })
             .addCase(fetchCurrentUser.pending, (state) => {
@@ -296,7 +327,7 @@ const authSlice = createSlice({
                 state.isAuthenticated = true;
                 state.authChecked = true;
             })
-            .addCase(fetchCurrentUser.rejected, (state, action) => {
+            .addCase(fetchCurrentUser.rejected, (state) => {
                 state.authLoading = false;
                 state.user = null;
                 state.isAuthenticated = false;
@@ -306,5 +337,5 @@ const authSlice = createSlice({
     },
 });
 
-export const { clearError, clearSuccess, logout } = authSlice.actions;
+export const { clearError, clearSuccess, finishAuthBootstrap, logout } = authSlice.actions;
 export default authSlice.reducer;

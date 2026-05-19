@@ -17,7 +17,7 @@ import Home from './pages/Home'
 import Profile from './pages/Profile'
 import Navbar from './components/Navbar'
 import SocialFooter from './components/SocialFooter'
-import { fetchCurrentUser } from './redux/slices/authSlice'
+import { fetchCurrentUser, finishAuthBootstrap, shouldSkipAuthBootstrap } from './redux/slices/authSlice'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -47,10 +47,25 @@ const App = () => {
     [mode]
   )
 
+  // Apply theme to document root so CSS variables respond to toggle
+  useEffect(() => {
+    try {
+      document.documentElement.setAttribute('data-theme', mode);
+    } catch {
+      // ignore
+    }
+  }, [mode]);
+
   // Check authentication only once on app mount
   useEffect(() => {
     if (!authCheckRef.current) {
       authCheckRef.current = true
+
+      if (shouldSkipAuthBootstrap()) {
+        dispatch(finishAuthBootstrap())
+        return
+      }
+
       dispatch(fetchCurrentUser())
     }
   }, [dispatch])

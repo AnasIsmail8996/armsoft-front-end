@@ -10,7 +10,7 @@ const ChangePassword = () => {
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
   const [URLSearchParams] = useSearchParams();
-  const token = URLSearchParams.get("q"); // token from email link
+  const token = URLSearchParams.get("q");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

@@ -1,5 +1,5 @@
 // Landing.jsx
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearError, deletePost, fetchPosts, updatePost } from '../redux/slices/postsSlice';
@@ -21,17 +21,7 @@ const Landing = () => {
     const [previewImage, setPreviewImage] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const fullName = user?.name || "Guest User";
-
-    const initials = useMemo(() => {
-        if (!user?.name) return "U";
-        return user.name
-            .split(" ")
-            .map(word => word[0])
-            .join("")
-            .slice(0, 2)
-            .toUpperCase();
-    }, [user?.name]);
+    // (removed unused local variables)
 
     useEffect(() => {
         dispatch(fetchPosts({ page: 1, limit: 6 }));
@@ -78,9 +68,9 @@ const Landing = () => {
         }
 
         try {
-            await dispatch(updatePost({ 
-                id: editingPost._id, 
-                formData 
+            await dispatch(updatePost({
+                id: editingPost._id,
+                formData
             })).unwrap();
 
             toast.success('Post updated successfully!');
@@ -113,92 +103,98 @@ const Landing = () => {
     return (
         <div className={styles.container}>
             {/* Hero Section (unchanged) */}
-           <section className={styles.hero}>
-    <div className={styles.heroContent}>
-        <span className={styles.eyebrow}>
-            Connect • Share • Grow
-        </span>
+            <section className={styles.hero}>
+                <div className={styles.heroContent}>
+                    <span className={styles.eyebrow}>
+                        Connect • Share • Grow
+                    </span>
 
-        <h1 className={styles.title}>
-            Build your <span className={styles.titleAccent}>social world</span> with meaningful connections.
-        </h1>
+                    <h1 className={styles.title}>
+                        Build your <span className={styles.titleAccent}>social world</span> with meaningful connections.
+                    </h1>
 
-        <p className={styles.subtitle}>
-            Share moments, connect with creators, explore trending content,
-            and grow your community with a modern social platform built for everyone.
-        </p>
+                    <p className={styles.subtitle}>
+                        Share moments, connect with creators, explore trending content,
+                        and grow your community with a modern social platform built for everyone.
+                    </p>
 
-        <div className={styles.ctaButtons}>
-            <button className={`${styles.btn} ${styles.btnPrimary}`}>
-                Get Started
-            </button>
+                    <div className={styles.ctaButtons}>
+                        <button
+                            className={`${styles.btn} ${styles.btnPrimary}`}
+                            onClick={() => navigate(isAuthenticated ? '/dashboard' : '/signup')}
+                        >
+                            Get Started
+                        </button>
 
-            <button className={`${styles.btn} ${styles.btnSecondary}`}>
-                Explore Feed
-            </button>
-        </div>
-    </div>
-
-    <div className={styles.heroImage}>
-        <div className={styles.heroCard}>
-
-            <div className={styles.heroCardItem}>
-                <div
-                    className={styles.heroCardAvatar}
-                    style={{ background: '#6c63ff' }}
-                >
-                    A
+                        <button
+                            className={`${styles.btn} ${styles.btnSecondary}`}
+                            onClick={() => navigate('/home')}
+                        >
+                            Explore Feed
+                        </button>
+                    </div>
                 </div>
 
-                <div className={styles.heroCardText}>
-                    <strong>Alex Johnson</strong>
-                    <span>Posted a new design</span>
-                </div>
+                <div className={styles.heroImage}>
+                    <div className={styles.heroCard}>
 
-                <div className={styles.heroCardBadge}>
-                    Trending
-                </div>
-            </div>
+                        <div className={styles.heroCardItem}>
+                            <div
+                                className={styles.heroCardAvatar}
+                                style={{ background: '#6c63ff' }}
+                            >
+                                A
+                            </div>
 
-            <div className={styles.heroCardItem}>
-                <div
-                    className={styles.heroCardAvatar}
-                    style={{ background: '#ff6b9d' }}
-                >
-                    S
-                </div>
+                            <div className={styles.heroCardText}>
+                                <strong>Alex Johnson</strong>
+                                <span>Posted a new design</span>
+                            </div>
 
-                <div className={styles.heroCardText}>
-                    <strong>Sophia Lee</strong>
-                    <span>Shared a new story</span>
-                </div>
+                            <div className={styles.heroCardBadge}>
+                                Trending
+                            </div>
+                        </div>
 
-                <div className={styles.heroCardBadge}>
-                    Live
-                </div>
-            </div>
+                        <div className={styles.heroCardItem}>
+                            <div
+                                className={styles.heroCardAvatar}
+                                style={{ background: '#ff6b9d' }}
+                            >
+                                S
+                            </div>
 
-            <div className={styles.heroCardItem}>
-                <div
-                    className={styles.heroCardAvatar}
-                    style={{ background: '#38d9a9' }}
-                >
-                    M
-                </div>
+                            <div className={styles.heroCardText}>
+                                <strong>Sophia Lee</strong>
+                                <span>Shared a new story</span>
+                            </div>
 
-                <div className={styles.heroCardText}>
-                    <strong>Michael Ray</strong>
-                    <span>Started following you</span>
-                </div>
+                            <div className={styles.heroCardBadge}>
+                                Live
+                            </div>
+                        </div>
 
-                <div className={styles.heroCardBadge}>
-                    New
-                </div>
-            </div>
+                        <div className={styles.heroCardItem}>
+                            <div
+                                className={styles.heroCardAvatar}
+                                style={{ background: '#38d9a9' }}
+                            >
+                                M
+                            </div>
 
-        </div>
-    </div>
-</section>
+                            <div className={styles.heroCardText}>
+                                <strong>Michael Ray</strong>
+                                <span>Started following you</span>
+                            </div>
+
+                            <div className={styles.heroCardBadge}>
+                                New
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
 
             {/* Feed Section */}
             <section className={styles.features}>
@@ -255,7 +251,7 @@ const Landing = () => {
                                 <button
                                     type="button"
                                     onClick={cancelEdit}
-                                    className={styles.btnSecondary}
+                                    className={styles.btnGhost}
                                     disabled={isSubmitting}
                                 >
                                     Cancel
