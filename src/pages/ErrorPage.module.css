@@ -1,0 +1,74 @@
+.container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--surface-sunken);
+  padding: 20px;
+}
+
+.card {
+  text-align: center;
+  background: var(--surface-base);
+  padding: 60px 40px;
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-float);
+  border: 1px solid var(--border-light);
+  max-width: 480px;
+  width: 100%;
+  transition: transform var(--duration-base) var(--ease-smooth);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+/* 404 big number */
+.code {
+  font-size: 110px;
+  font-family: var(--font-display);
+  color: var(--accent-primary);
+  margin: 0;
+  line-height: 1;
+  text-shadow: 0 10px 30px var(--accent-glow);
+}
+
+/* Title */
+.title {
+  font-size: 28px;
+  font-weight: 600;
+  margin: 10px 0;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+}
+
+/* Description */
+.text {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+/* Button */
+.button {
+  padding: 12px 22px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--accent-primary);
+  color: var(--text-inverse);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--duration-base) var(--ease-spring);
+  box-shadow: var(--shadow-card);
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  background: #5a52e0;
+  box-shadow: var(--shadow-hover);
+}
+
+.button:active {
+  transform: scale(0.97);
+}

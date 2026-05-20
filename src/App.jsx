@@ -14,6 +14,7 @@ import ForgotPassword from './components/pages/ForgotPassword'
 import ChangePassword from './components/pages/ChangePassword'
 import Landing from './pages/Landing'
 import Home from './pages/Home'
+import Error from './pages/ErrorPage'
 import Profile from './pages/Profile'
 import Navbar from './components/Navbar'
 import SocialFooter from './components/SocialFooter'
@@ -99,7 +100,7 @@ const App = () => {
           </Route>
 
           {/* Fallback */}
-          <Route path="*" element={<Landing />} />
+          <Route path="*" element={<Error />} />
         </Routes>
         <SocialFooter />
       </BrowserRouter>
